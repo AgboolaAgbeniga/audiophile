@@ -1,4 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Audiophile
+
+A premium audio equipment e-commerce platform built with Next.js, TypeScript, and Convex.
+
+## Project Structure
+
+```
+audiophile/
+├── .gitignore
+├── eslint.config.mjs
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── README.md
+├── STYLE_GUIDE.md
+├── tailwind.config.ts
+├── tsconfig.json
+│
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── favicon.ico
+│   │
+│   ├── page.tsx
+│   │
+│   ├── style-guide/
+│   │   └── page.tsx
+│   │
+│   ├── products/
+│   │   ├── page.tsx
+│   │   └── [slug]/page.tsx
+│   │
+│   ├── cart/
+│   │   └── page.tsx
+│   │
+│   ├── checkout/
+│   │   └── page.tsx
+│   │
+│   ├── confirmation/
+│   │   └── page.tsx
+│   │
+│   ├── api/
+│   │   ├── send-email/route.ts
+│   │   └── webhook/route.ts
+│   │
+│   ├── components/
+│   │   ├── ui/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Radio.tsx
+│   │   │   ├── Counter.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   └── Navbar.tsx
+│   │   │
+│   │   ├── products/
+│   │   │   ├── ProductCard.tsx
+│   │   │   └── ProductGallery.tsx
+│   │   │
+│   │   └── cart/
+│   │       ├── CartItem.tsx
+│   │       └── CartSummary.tsx
+│   │
+│   ├── lib/
+│   │   ├── utils.ts
+│   │   ├── convexClient.ts
+│   │   ├── formatCurrency.ts
+│   │   ├── email.ts
+│   │   ├── validation.ts
+│   │   └── constants.ts
+│   │
+│   ├── hooks/
+│   │   ├── useCart.ts
+│   │   ├── useModal.ts
+│   │   └── useFormValidation.ts
+│   │
+│   ├── types/
+│   │   ├── product.ts
+│   │   ├── order.ts
+│   │   └── user.ts
+│   │
+│   └── data/
+│       └── products.ts
+│
+├── convex/
+│   ├── schema.ts
+│   ├── functions/
+│   │   ├── orders.ts
+│   │   ├── products.ts
+│   │   └── users.ts
+│   ├── convex.json
+│   ├── tsconfig.json
+│   └── _generated/
+│
+├── public/
+│   ├── images/
+│   │   ├── products/
+│   │   └── shared/
+│   ├── icons/
+│   │   └── logo.svg
+│   ├── email-logo.png
+│   └── favicon.ico
+│
+└── .env.local
+```
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: Convex
+- **State Management**: React Hooks
+- **Form Validation**: Custom hooks
+- **Email**: Custom email service
+- **Icons**: SVG icons
+
+## Features
+
+- Product catalog with detailed product pages
+- Shopping cart functionality
+- Checkout process with form validation
+- Order confirmation
+- Responsive design
+- Type-safe development
+- Real-time database with Convex
 
 ## Getting Started
 

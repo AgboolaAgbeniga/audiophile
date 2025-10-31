@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button } from '../components/Button'
-import { Input } from '../components/Input'
-import { Radio } from '../components/Radio'
-import { Counter } from '../components/Counter'
+import { Button } from '../components/ui/Button'
+import { Input } from '../components/ui/Input'
+import { Radio } from '../components/ui/Radio'
+import { Counter } from '../components/ui/Counter'
 
 const StyleGuide = () => {
   return (

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../lib/utils';
+import { cn } from '../../lib/utils';
 
 const radioVariants = cva(
   'flex items-center gap-3 w-[309px] h-[56px] px-4 font-bold text-[14px] rounded-lg cursor-pointer transition-colors',
