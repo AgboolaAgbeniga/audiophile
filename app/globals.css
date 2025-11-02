@@ -1,13 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ==========================================
+   Global CSS Variables
+   ========================================== */
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-primary: #d87d4a;
+  --color-primary-hover: #d87d4a;
+  --color-accent: #fbaf85;
+  --color-secondary: #101010;
+  --color-light: #f1f1f1;
+  --color-light-lighter: #fafafa;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-error: #cd2c2c;
+  --color-border: #cfcfcf;
 }
 
+/* ==========================================
+   Typography Defaults
+   ========================================== */
+h1 {
+  @apply text-[56px] leading-[58px] font-bold tracking-[2px];
+}
+h2 {
+  @apply text-[40px] leading-[44px] font-bold tracking-[1.5px];
+}
+h3 {
+  @apply text-[32px] leading-[36px] font-bold tracking-[1.15px];
+}
+h4 {
+  @apply text-[28px] leading-[38px] font-bold tracking-[2px];
+}
+h5 {
+  @apply text-[24px] leading-[33px] font-bold tracking-[1.7px];
+}
+h6 {
+  @apply text-[18px] leading-[24px] font-bold tracking-[1.3px];
+}
+p {
+  @apply text-[15px] leading-[25px] font-medium;
+}
 
+/* ==========================================
+   Body Styles
+   ========================================== */
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  @apply antialiased;
 }

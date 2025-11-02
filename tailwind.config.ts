@@ -1,5 +1,6 @@
+// tailwind.config.ts
 import type { Config } from "tailwindcss"
-import fontFamily from "tailwindcss/defaultTheme"
+import defaultTheme from "tailwindcss/defaultTheme"
 
 const config: Config = {
   content: [
@@ -18,18 +19,23 @@ const config: Config = {
     },
     extend: {
       colors: {
-        primary: "#D87D4A",
-        "primary-hover": "#FBAF85",
-        secondary: "#101010",
-        light: "#F1F1F1",
-        "light-lighter": "#FAFAFA",
-        white: "#FFFFFF",
-        black: "#000000",
-        error: "#CD2C2C",
-        border: "#CFCFCF",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        accent: "var(--accent)", // hover/active state
+        secondary: "var(--secondary)",
+        light: "var(--light)",
+        "light-lighter": "var(--light-lighter)",
+        white: "var(--white)",
+        black: "var(--black)",
+        error: "var(--error)",
+        border: "var(--border)",
       },
       fontFamily: {
-        sans: ["var(--font-manrope)", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
+        sans: [
+          "var(--font-manrope)",
+          ...defaultTheme.fontFamily.sans,
+        ],
       },
       fontSize: {
         h1: ["56px", { lineHeight: "58px", fontWeight: "700", letterSpacing: "2px" }],
@@ -38,8 +44,8 @@ const config: Config = {
         h4: ["28px", { lineHeight: "38px", fontWeight: "700", letterSpacing: "2px" }],
         h5: ["24px", { lineHeight: "33px", fontWeight: "700", letterSpacing: "1.7px" }],
         h6: ["18px", { lineHeight: "24px", fontWeight: "700", letterSpacing: "1.3px" }],
-        overline: ["14px", { lineHeight: "19px", fontWeight: "400", letterSpacing: "10px" }],
-        subtitle: ["15px", { lineHeight: "25px", fontWeight: "700", letterSpacing: "1px" }],
+        overline: ["14px", { lineHeight: "19px", fontWeight: "400", letterSpacing: "10px"}],
+        subtitle: ["30px", { lineHeight: "25px", fontWeight: "700", letterSpacing: "2px", color: "red" }],
         body: ["15px", { lineHeight: "25px", fontWeight: "500" }],
       },
       boxShadow: {

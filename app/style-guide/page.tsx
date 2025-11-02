@@ -6,7 +6,7 @@ import { Counter } from '../components/ui/Counter'
 
 const StyleGuide = () => {
   return (
-    <div className="min-h-screen bg-grayLighter p-10 font-manrope text-background">
+    <div className="min-h-screen bg-light-lighter p-10 font-manrope text-secondary">
       {/* Title */}
       <h1 className="text-h1 mb-8">🎨 Project Style Guide</h1>
 
@@ -46,7 +46,7 @@ const StyleGuide = () => {
       <section className="mb-16">
         <h2 className="text-h3 mb-4 text-black">Typography</h2>
         <div className="space-y-4 text-black">
-          <h1 className="text-h1">Heading 1 - Manrope Bold 56px</h1>
+          <h1 className="text-h1">Heading 1 - Manroped Bold 56px</h1>
           <h2 className="text-h2">Heading 2 - Manrope Bold 40px</h2>
           <h3 className="text-h3">Heading 3 - Manrope Bold 32px</h3>
           <h4 className="text-h4">Heading 4 - Manrope Bold 28px</h4>

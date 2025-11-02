@@ -8,7 +8,9 @@
  * @module
  */
 
-import type * as functions_orders from "../functions/orders.js";
+import type * as mutations from "../mutations.js";
+import type * as queries from "../queries.js";
+import type * as seed from "../seed.js";
 
 import type {
   ApiFromModules,
@@ -25,7 +27,9 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  "functions/orders": typeof functions_orders;
+  mutations: typeof mutations;
+  queries: typeof queries;
+  seed: typeof seed;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 

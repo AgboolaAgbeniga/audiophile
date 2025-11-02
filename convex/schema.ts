@@ -1,61 +1,67 @@
-import { defineSchema, defineTable } from 'convex/server';
-import { v } from 'convex/values';
+// convex/schema.ts
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
 
 export default defineSchema({
-  products: defineTable({
-    name: v.string(),
-    description: v.string(),
-    price: v.number(),
-    image: v.string(),
-    category: v.string(),
-    features: v.array(v.string()),
-    includes: v.array(v.object({
-      item: v.string(),
-      quantity: v.number(),
-    })),
-    gallery: v.array(v.string()),
-    others: v.array(v.string()), // Product IDs
-  }),
-
-  orders: defineTable({
-    userId: v.string(),
-    items: v.array(v.object({
-      productId: v.string(),
-      name: v.string(),
-      price: v.number(),
-      quantity: v.number(),
-    })),
-    total: v.number(),
-    status: v.union(
-      v.literal('pending'),
-      v.literal('processing'),
-      v.literal('shipped'),
-      v.literal('delivered')
-    ),
-    shippingAddress: v.object({
-      name: v.string(),
-      email: v.string(),
-      phone: v.string(),
-      address: v.string(),
-      city: v.string(),
-      zipCode: v.string(),
-      country: v.string(),
-    }),
-    paymentMethod: v.object({
-      type: v.union(v.literal('e-money'), v.literal('cash')),
-      details: v.any(),
-    }),
-  }).index('by_user', ['userId']),
-
   users: defineTable({
     name: v.string(),
     email: v.string(),
-    phone: v.optional(v.string()),
-    address: v.optional(v.object({
-      street: v.string(),
+    createdAt: v.number(),
+  }),
+
+  products: defineTable({
+    name: v.string(),
+    slug: v.string(),
+    description: v.string(),
+    image: v.string(),
+    price: v.number(),
+    category: v.string(),
+    stock: v.number(),
+    features: v.array(v.string()),
+    includes: v.array(
+      v.object({
+        item: v.string(),
+        quantity: v.number(),
+      })
+    ),
+    gallery: v.array(v.string()),
+  }),
+
+  cartItems: defineTable({
+    userId: v.id("users"),
+    productId: v.id("products"),
+    quantity: v.number(),
+    addedAt: v.number(),
+  }),
+
+  orders: defineTable({
+    userId: v.id("users"),
+    items: v.array(
+      v.object({
+        productId: v.id("products"),
+        name: v.string(),
+        price: v.number(),
+        quantity: v.number(),
+      })
+    ),
+    customer: v.object({
+      name: v.string(),
+      email: v.string(),
+      phone: v.string(),
+    }),
+    shipping: v.object({
+      address: v.string(),
       city: v.string(),
-      zipCode: v.string(),
+      zip: v.string(),
       country: v.string(),
-    })),
-  }).index('by_email', ['email']),
+    }),
+    totals: v.object({
+      subtotal: v.number(),
+      shipping: v.number(),
+      tax: v.number(),
+      grandTotal: v.number(),
+    }),
+    status: v.string(),
+    createdAt: v.number(),
+  }),
 });
