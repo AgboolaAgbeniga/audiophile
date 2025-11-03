@@ -19,6 +19,16 @@ const Checkout = () => {
 
   return (
     <div className="bg-[#F1F1F1] min-h-screen">
+      {/* Go Back Link */}
+      <div className="container mx-auto py-8 max-w-[1110px]">
+        <button
+          onClick={() => router.back()}
+          className="text-black/50 hover:text-primary transition-colors duration-200"
+        >
+          Go Back
+        </button>
+      </div>
+
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-[1110px] mx-auto">
           <h1 className="text-h3 font-bold mb-8">Checkout</h1>

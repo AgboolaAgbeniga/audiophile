@@ -37,7 +37,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Go Back Link */}
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px- py-8 max-w-[1110px]">
         <Link
           href={`/${product.category}`}
           className="text-black/50 hover:text-primary transition-colors duration-200"
@@ -47,8 +47,8 @@ const ProductPage = ({ params }: ProductPageProps) => {
       </div>
 
       {/* Product Details Section */}
-      <section className="container mx-auto px-6 py-8">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-10 max-w-[1110px] mx-auto">
+      <section className="container mx-auto py-8">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 max-w-[1110px] mx-auto">
           {/* Product Image */}
           <div className="w-full max-w-[540px] rounded-lg overflow-hidden">
             <img
