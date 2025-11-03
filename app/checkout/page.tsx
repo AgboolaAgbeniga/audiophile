@@ -19,8 +19,8 @@ const Checkout = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="bg-[#F1F1F1] flex-1">
+    <div className="flex flex-col min-h-screen bg-[#F1F1F1]">
+      <div className="flex-1 h-full">
         {/* Go Back Link */}
         <div className="container mx-auto py-8 max-w-[1110px]">
           <button
