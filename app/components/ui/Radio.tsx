@@ -24,28 +24,38 @@ export interface RadioProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>,
     VariantProps<typeof radioVariants> {
   label: string;
-  checked?: boolean;
-  onCheckedChange?: (checked: boolean) => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
-  ({ className, state, label, checked, onCheckedChange, ...props }, ref) => {
+  ({ className, state, label, value, onChange, ...props }, ref) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onCheckedChange?.(e.target.checked);
-      props.onChange?.(e);
+      onChange?.(e);
     };
 
+    const isChecked = props.checked || false;
+    const currentState = isChecked ? 'active' : isHovered ? 'hover' : 'default';
+
     return (
-      <label className={cn(radioVariants({ state, className }))}>
+      <label
+        className={cn(radioVariants({ state: currentState, className }))}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <span className="relative flex items-center justify-center">
           <input
             type="radio"
             ref={ref}
-            checked={checked}
+            value={value}
             onChange={handleChange}
             className={cn(
               'appearance-none w-5 h-5 border-2 border-border rounded-full cursor-pointer transition-all duration-200',
-              'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white'
+              'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white',
+              isChecked && 'border-primary',
+              isHovered && !isChecked && 'border-primary-hover'
             )}
             {...props}
           />
@@ -53,7 +63,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
           <span
             className={cn(
               'pointer-events-none absolute w-2.5 h-2.5 rounded-full bg-primary scale-0 transition-transform duration-150',
-              checked && 'scale-100'
+              isChecked && 'scale-100'
             )}
           />
         </span>

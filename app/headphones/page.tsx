@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
-import { products } from '../data/products';
+import { useQuery } from 'convex/react';
+import { api } from '../../convex/_generated/api';
 import { Button } from '../components/ui/Button';
 import Category from '../components/layout/Category';
 import InfoSection from '../components/layout/InfoSection';
@@ -7,7 +10,7 @@ import Footer from '../components/layout/Footer';
 import Link from 'next/link';
 
 const HeadphonesPage = () => {
-  const headphones = products.filter(product => product.category === 'headphones');
+  const headphones = useQuery(api.queries.getProductsByCategory, { category: 'headphones' });
 
   return (
     <div>
@@ -18,11 +21,11 @@ const HeadphonesPage = () => {
 
       {/* Products */}
       <div className="container mx-auto px-6 py-16 space-y-32 max-w-[1110px]">
-        {headphones.map((product, index) => {
+        {headphones?.map((product, index) => {
           const isEven = index % 2 === 0;
           return (
             <div
-              key={product.id}
+              key={product._id}
               className={`max-w-[1110px] mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${
                 isEven ? '' : 'md:grid-flow-col-dense'
               }`}

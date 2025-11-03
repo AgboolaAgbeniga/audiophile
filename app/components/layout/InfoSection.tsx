@@ -9,7 +9,7 @@ const InfoSection = () => {
         {/* Left: Text */}
         <div className="flex items-center justify-center md:justify-start px-8 md:px-16 order-2 md:order-1">
           <div className="text-black text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+            <h2 className="font-bold mb-6 leading-tight uppercase">
               Bringing you the <span className='text-primary'>best</span> audio gear
             </h2>
             <p className="text-sm text-black/50 md:text-base leading-relaxed">

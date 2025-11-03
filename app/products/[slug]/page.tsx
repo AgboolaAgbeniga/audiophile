@@ -1,14 +1,15 @@
 'use client';
 
 import React, { use, useState } from 'react';
-import { products } from '../../data/products';
-import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { useQuery } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
 import Category from '../../components/layout/Category';
 import InfoSection from '../../components/layout/InfoSection';
 import Footer from '../../components/layout/Footer';
 import { Button } from '../../components/ui/Button';
 import { Counter } from '../../components/ui/Counter';
-import Link from 'next/link';
+import { useCart } from '../../contexts/CartContext';
 
 interface ProductPageProps {
   params: Promise<{
@@ -18,149 +19,241 @@ interface ProductPageProps {
 
 const ProductPage = ({ params }: ProductPageProps) => {
   const { slug } = use(params);
-  const product = products.find(p => p.slug === slug);
+  const product = useQuery(api.queries.getProductBySlug, { slug });
   const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCart();
 
   if (!product) {
-    notFound();
+    return (
+      <div className="container mx-auto px-6 py-16 text-center">
+        <p className="text-red-500 text-lg mb-4">Product not found.</p>
+        <Link href="/" className="text-primary underline">
+          Go back to home
+        </Link>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       {/* Go Back Link */}
       <div className="container mx-auto px-6 py-8">
-        <Link href={`/${product.category}`} className="text-black/50 hover:text-primary transition-colors duration-200">
+        <Link
+          href={`/${product.category}`}
+          className="text-black/50 hover:text-primary transition-colors duration-200"
+        >
           Go Back
         </Link>
       </div>
 
-      {/* Product Image and Details */}
-      <div className="container mx-auto px-6 py-8">
-        <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-8 max-w-[1110px] mx-auto border">
+      {/* Product Details Section */}
+      <section className="container mx-auto px-6 py-8">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-10 max-w-[1110px] mx-auto">
           {/* Product Image */}
-          <div className="rounded-lg overflow-hidden flex-shrink-0">
+          <div className="w-full max-w-[540px] rounded-lg overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
-              className="w-[327px] h-[327px] md:w-[281px] md:h-[480px] lg:w-[540px] lg:h-[560px] object-cover mx-auto md:mx-0"
+              loading="lazy"
+              className="w-full h-auto object-cover"
             />
           </div>
 
-          {/* Product Details */}
-          <div className="flex flex-col justify-center border w-full md:w-[445px] mx-auto md:mx-0 text-center md:text-left">
+          {/* Product Info */}
+          <div className="flex flex-col justify-center w-full lg:max-w-[445px] text-center lg:text-left">
             <h4 className="text-2xl md:text-4xl font-bold mb-4">{product.name}</h4>
-            <p className="text-lg text-black/50 mb-6">{product.description}</p>
-            <h6 className="text-2xl font-bold mb-8">
+            <p className="text-base text-black/50 mb-6">{product.description}</p>
+            <h6 className="text-xl md:text-2xl font-bold mb-8">
               ${product.price.toLocaleString()}
             </h6>
 
-            {/* Quantity Counter and Add to Cart */}
-            <div className="flex items-center gap-4 mb-8">
+            <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
               <Counter
                 count={quantity}
-                onIncrement={() => setQuantity(prev => Math.min(prev + 1, 99))}
-                onDecrement={() => setQuantity(prev => Math.max(prev - 1, 1))}
+                onIncrement={() => setQuantity((prev) => Math.min(prev + 1, 99))}
+                onDecrement={() => setQuantity((prev) => Math.max(prev - 1, 1))}
               />
-              <Button variant="primary" size="lg">
+              <Button
+                variant="primary"
+                size="lg"
+                successText="Added"
+                onClick={() => {
+                  if (product) {
+                    for (let i = 0; i < quantity; i++) {
+                      addItem({
+                        id: product._id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        slug: product.slug,
+                      });
+                    }
+                  }
+                }}
+              >
                 ADD TO CART
               </Button>
             </div>
           </div>
         </div>
+      </section>
 
-      </div>
-
-      {/* Features and In the Box */}
-      <div className="container mx-auto px-6 py-16">
-        <div className="max-w-[1110px] mx-auto">
-          {/* Desktop and Tablet Layout */}
-          <div className="hidden md:flex md:flex-row md:justify-between md:gap-[125px]">
-            {/* Features */}
-            <div className="w-[635px] h-[318px]">
-              <h3 className="text-2xl font-bold mb-6">Features</h3>
-              <div className="space-y-4">
-                {product.features.map((feature, index) => (
-                  <p key={index} className="text-gray-700 leading-relaxed">
-                    {feature}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            {/* What's in the box */}
-            <div className="w-[350px] h-[225px]">
-              <h3 className="text-2xl font-bold mb-6">In the box</h3>
-              <ul className="space-y-2">
-                {product.includes.map((item, index) => (
-                  <li key={index} className="text-gray-700 flex items-center">
-                    <span className="font-bold text-primary mr-4">{item.quantity}x</span>
-                    <span className="capitalize">{item.item}</span>
-                  </li>
-                ))}
-              </ul>
+      {/* Features and In The Box Section */}
+      <section className="container mx-auto px-6 py-16">
+        <div className="max-w-[1110px] mx-auto grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12">
+          {/* Features */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6">Features</h3>
+            <div className="space-y-4">
+              {product.features.map((feature, i) => (
+                <p key={i} className="text-gray-700 leading-relaxed">
+                  {feature}
+                </p>
+              ))}
             </div>
           </div>
 
+          {/* In The Box */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6">In the Box</h3>
+            <ul className="space-y-2">
+              {product.includes.map((item, i) => (
+                <li key={i} className="text-gray-700 flex items-center">
+                  <span className="font-bold text-primary mr-4">
+                    {item.quantity}x
+                  </span>
+                  <span className="capitalize">{item.item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Gallery */}
+      {product.gallery?.length > 0 && (
+        <section className="container mx-auto px-6 py-16 mb-32">
+          {/* Desktop Layout */}
+          <div className="hidden lg:grid lg:grid-cols-[445px_635px] gap-[30px] h-[502px] justify-center">
+            {/* Left column (stacked images) */}
+            <div className="flex flex-col gap-[30px]">
+              {product.gallery.slice(0, 2).map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`${product.name} gallery ${i + 1}`}
+                  loading="lazy"
+                  className="w-[445px] h-[280px] object-cover rounded-lg"
+                />
+              ))}
+            </div>
+
+            {/* Right column (large image) */}
+            <div>
+              <img
+                src={product.gallery[2]}
+                alt={`${product.name} gallery 3`}
+                loading="lazy"
+                className="w-[635px] h-[592px] object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          {/* Tablet Layout */}
+          <div className="hidden md:grid lg:hidden md:grid-cols-[277px_395px] gap-[30px] h-[368px]">
+            {/* Left column (stacked images) */}
+            <div className="flex flex-col gap-[30px]">
+              {product.gallery.slice(0, 2).map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`${product.name} gallery ${i + 1}`}
+                  loading="lazy"
+                  className="w-[277px] h-[174px] object-cover rounded-lg"
+                />
+              ))}
+            </div>
+
+            {/* Right column (large image) */}
+            <div className="flex">
+              <img
+                src={product.gallery[2]}
+                alt={`${product.name} gallery 3`}
+                loading="lazy"
+                className="w-[395px] h-[368px] object-cover rounded-lg"
+              />
+            </div>
+          </div>
 
           {/* Mobile Layout */}
-          <div className="md:hidden space-y-8">
-            {/* Features */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6">Features</h3>
-              <div className="space-y-4">
-                {product.features.map((feature, index) => (
-                  <p key={index} className="text-gray-700 leading-relaxed">{feature}</p>
-                ))}
-              </div>
-            </div>
-
-            {/* What's in the box */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6">In the box</h3>
-              <ul className="space-y-2">
-                {product.includes.map((item, index) => (
-                  <li key={index} className="text-gray-700 flex items-center">
-                    <span className="font-bold text-primary mr-4">{item.quantity}x</span>
-                    <span className="capitalize">{item.item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="md:hidden grid grid-cols-1 gap-6">
+            {product.gallery.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={`${product.name} gallery ${i + 1}`}
+                loading="lazy"
+                className={`w-full object-cover rounded-lg ${
+                  i === product.gallery.length - 1 ? 'h-[368px]' : 'h-[174px]'
+                }`}
+              />
+            ))}
           </div>
-        </div>
-      </div>
-
-      {/* Gallery */}
-      {product.gallery.length > 0 && (
-        <div className="container mx-auto px-6 py-16">
-          <div className="max-w-[1110px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {/* Left column - stacked images */}
-              <div className="flex flex-col gap-6 md:gap-8">
-                <img
-                  src={product.gallery[0]}
-                  alt={`${product.name} gallery 1`}
-                  className="w-full h-[280px] md:h-[280px] object-cover rounded-lg"
-                />
-                <img
-                  src={product.gallery[1]}
-                  alt={`${product.name} gallery 2`}
-                  className="w-full h-[280px] md:h-[280px] object-cover rounded-lg"
-                />
-              </div>
-
-              {/* Right column - single large image */}
-              <div className="flex">
-                <img
-                  src={product.gallery[2]}
-                  alt={`${product.name} gallery 3`}
-                  className="w-full h-[592px] md:h-[592px] object-cover rounded-lg"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
       )}
+
+      {/* You May Also Like Section */}
+      <section className="container mx-auto px-6 py-16">
+        <div className="max-w-[1110px] mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 uppercase">You may also like</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* XX99 MARK I Headphones */}
+            <div className="flex flex-col items-center">
+              <img
+                src="/assets/product-xx99-mark-one-headphones/desktop/image-category-page-preview.jpg"
+                alt="XX99 MARK I Headphones"
+                className="w-full h-[318px] object-cover rounded-lg mb-8"
+              />
+              <h3 className="text-xl font-bold mb-4">XX99 MARK I</h3>
+              <Link href="/products/xx99-mark-one-headphones">
+                <Button variant="primary" size="lg">
+                  See Product
+                </Button>
+              </Link>
+            </div>
+
+            {/* XX59 Headphones */}
+            <div className="flex flex-col items-center">
+              <img
+                src="/assets/product-xx59-headphones/desktop/image-category-page-preview.jpg"
+                alt="XX59 Headphones"
+                className="w-full h-[318px] object-cover rounded-lg mb-8"
+              />
+              <h3 className="text-xl font-bold mb-4">XX59</h3>
+              <Link href="/products/xx59-headphones">
+                <Button variant="primary" size="lg">
+                  See Product
+                </Button>
+              </Link>
+            </div>
+
+            {/* ZX9 Speaker */}
+            <div className="flex flex-col items-center">
+              <img
+                src="/assets/product-zx9-speaker/desktop/image-category-page-preview.jpg"
+                alt="ZX9 Speaker"
+                className="w-full h-[318px] object-cover rounded-lg mb-8"
+              />
+              <h3 className="text-xl font-bold mb-4">ZX9 SPEAKER</h3>
+              <Link href="/products/zx9-speaker">
+                <Button variant="primary" size="lg">
+                  See Product
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Category Section */}
       <Category />

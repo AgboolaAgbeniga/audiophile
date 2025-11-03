@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
@@ -7,39 +9,55 @@ const inputVariants = cva(
   {
     variants: {
       state: {
-        default: 'border border-border bg-light-lighter text-black/40 placeholder:text-black/40 hover:border-primary-hover',
+        default: 'border border-border bg-white text-black placeholder:text-black/40 hover:border-primary-hover',
         active: 'border border-primary bg-white text-black focus:ring-1 focus:ring-primary caret-primary',
-        error: 'border border-error text-error placeholder:text-error',
+        error: 'border border-[#CD2C2C] bg-white text-black placeholder:text-black/40',
+      },
+      size: {
+        default: 'w-[309px] h-[56px]',
+        address: 'w-[634px] h-[56px]',
       },
     },
     defaultVariants: {
       state: 'default',
+      size: 'default',
     },
   }
 );
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
     VariantProps<typeof inputVariants> {
   label?: string;
   error?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, state, label, error, ...props }, ref) => {
+  ({ className, state, size, label, error, ...props }, ref) => {
+    const [isFocused, setIsFocused] = React.useState(false);
+
+    const handleFocus = () => setIsFocused(true);
+    const handleBlur = () => setIsFocused(false);
+
+    const currentState = error ? 'error' : isFocused ? 'active' : 'default';
+
     return (
       <div className="flex flex-col">
-        {label && (
-          <label className={cn('block mb-1', error ? 'text-error' : 'text-black')}>
-            {label}
-          </label>
-        )}
+        <div className="flex justify-between items-center mb-1">
+          {label && (
+            <label className={cn('text-[12px] font-bold', error ? 'text-[#CD2C2C] ' : 'text-black')}>
+              {label}
+            </label>
+          )}
+          {error && <span className="text-[#CD2C2C] text-[12px] font-medium leading-tight">{error}</span>}
+        </div>
         <input
-          className={cn(inputVariants({ state, className }))}
+          className={cn(inputVariants({ state: currentState, size, className }))}
           ref={ref}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           {...props}
         />
-        {error && <p className="text-error text-sm mt-1">{error}</p>}
       </div>
     );
   }

@@ -35,13 +35,14 @@ export default defineSchema({
   }),
 
   orders: defineTable({
-    userId: v.id("users"),
+    userId: v.optional(v.id("users")), // Make userId optional for guest orders
     items: v.array(
       v.object({
         productId: v.id("products"),
         name: v.string(),
         price: v.number(),
         quantity: v.number(),
+        image: v.optional(v.string()),
       })
     ),
     customer: v.object({
