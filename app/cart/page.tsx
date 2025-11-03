@@ -8,14 +8,14 @@ import Category from '../components/layout/Category';
 import InfoSection from '../components/layout/InfoSection';
 import Footer from '../components/layout/Footer';
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const { items, updateQuantity, removeItem, getTotalPrice } = useCart();
 
   const subtotal = getTotalPrice();
   const shipping = subtotal > 0 ? 50 : 0; // Only add shipping if there are items
   const tax = Math.round(subtotal * 0.2);
   const grandTotal = subtotal + shipping + tax;
-// 22303318761
+
   if (items.length === 0) {
     return (
       <div className="flex flex-col min-h-screen">
