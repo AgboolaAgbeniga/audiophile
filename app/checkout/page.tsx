@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import CheckoutForm from '../components/checkout/CheckoutForm';
+import Footer from '../components/layout/Footer';
 import { Id } from '../../convex/_generated/dataModel';
 
 const Checkout = () => {
@@ -18,22 +19,29 @@ const Checkout = () => {
   };
 
   return (
-    <div className="bg-[#F1F1F1] min-h-screen">
-      {/* Go Back Link */}
-      <div className="container mx-auto py-8 max-w-[1110px]">
-        <button
-          onClick={() => router.back()}
-          className="text-black/50 hover:text-primary transition-colors duration-200"
-        >
-          Go Back
-        </button>
+    <div className="flex flex-col min-h-screen">
+      <div className="bg-[#F1F1F1] flex-1">
+        {/* Go Back Link */}
+        <div className="container mx-auto py-8 max-w-[1110px]">
+          <button
+            onClick={() => router.back()}
+            className="text-black/50 hover:text-primary transition-colors duration-200"
+          >
+            Go Back
+          </button>
+        </div>
+
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-[1110px] mx-auto">
+            {/* <h1 className="text-h3 font-bold mb-8">Checkout</h1> */}
+            <CheckoutForm userId={userId} onOrderComplete={handleOrderComplete} />
+          </div>
+        </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-[1110px] mx-auto">
-          <h1 className="text-h3 font-bold mb-8">Checkout</h1>
-          <CheckoutForm userId={userId} onOrderComplete={handleOrderComplete} />
-        </div>
+      {/* Footer */}
+      <div className="mt-16">
+        <Footer />
       </div>
     </div>
   );
