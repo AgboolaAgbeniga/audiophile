@@ -9,8 +9,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
   // Add debug logging for troubleshooting
-  debug: true,
-  logger: true,
+  debug: process.env.NODE_ENV === 'development',
+  logger: process.env.NODE_ENV === 'development',
 });
 
 export const sendEmail = async (to: string, subject: string, html: string) => {
