@@ -153,33 +153,45 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ userId, onOrderComplete }) 
       // Clear local cart
       clearCart();
 
-      // Send order confirmation email
+      // Send order confirmation email via API route
       try {
         const orderNumber = typeof orderId === 'string' && orderId.includes('_') ? orderId.split('_')[1] : orderId.toString(); // Extract order number from ID
 
-        await sendOrderConfirmationEmailMutation({
-          orderId,
-          customerEmail: formData.email,
-          customerName: formData.name,
-          orderNumber,
-          items: orderItems.map(item => ({
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-          })),
-          totals: {
-            subtotal,
-            shipping,
-            tax,
-            grandTotal,
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          shippingAddress: {
-            address: formData.address,
-            city: formData.city,
-            zip: formData.zip,
-            country: formData.country,
-          },
+          body: JSON.stringify({
+            orderId,
+            customerEmail: formData.email,
+            customerName: formData.name,
+            orderNumber,
+            items: orderItems.map(item => ({
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity,
+            })),
+            totals: {
+              subtotal,
+              shipping,
+              tax,
+              grandTotal,
+            },
+            shippingAddress: {
+              address: formData.address,
+              city: formData.city,
+              zip: formData.zip,
+              country: formData.country,
+            },
+          }),
         });
+
+        if (!response.ok) {
+          throw new Error('Failed to send email');
+        }
+
+        console.log('Order confirmation email sent successfully');
       } catch (emailError) {
         console.error('Failed to send confirmation email:', emailError);
         // Don't fail the order if email fails
