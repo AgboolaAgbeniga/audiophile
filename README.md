@@ -18,18 +18,14 @@ audiophile/
 ├── tsconfig.json
 │
 ├── app/
+│   ├── favicon.ico
 │   ├── globals.css
 │   ├── layout.tsx
-│   ├── favicon.ico
-│   │
 │   ├── page.tsx
 │   │
-│   ├── style-guide/
-│   │   └── page.tsx
-│   │
-│   ├── products/
-│   │   ├── page.tsx
-│   │   └── [slug]/page.tsx
+│   ├── api/
+│   │   ├── send-email/route.ts
+│   │   └── webhook/route.ts
 │   │
 │   ├── cart/
 │   │   └── page.tsx
@@ -37,97 +33,124 @@ audiophile/
 │   ├── checkout/
 │   │   └── page.tsx
 │   │
-│   ├── confirmation/
-│   │   └── page.tsx
-│   │
-│   ├── api/
-│   │   ├── send-email/route.ts
-│   │   └── webhook/route.ts
-│   │
 │   ├── components/
-│   │   ├── ui/
-│   │   │   ├── Button.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── Radio.tsx
-│   │   │   ├── Counter.tsx
-│   │   │   └── index.ts
-│   │   │
+│   │   ├── ClientLayout.tsx
+│   │   ├── cart/
+│   │   │   ├── CartItem.tsx
+│   │   │   ├── CartModal.tsx
+│   │   │   └── CartSummary.tsx
+│   │   ├── checkout/
+│   │   │   └── CheckoutForm.tsx
 │   │   ├── layout/
-│   │   │   ├── Header.tsx
+│   │   │   ├── Category.tsx
+│   │   │   ├── CategorySection.tsx
 │   │   │   ├── Footer.tsx
-│   │   │   └── Navbar.tsx
-│   │   │
+│   │   │   ├── Header.tsx
+│   │   │   ├── InfoSection.tsx
+│   │   │   ├── Menu.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   └── ProductSection.tsx
 │   │   ├── products/
+│   │   │   ├── MenuCard.tsx
 │   │   │   ├── ProductCard.tsx
 │   │   │   └── ProductGallery.tsx
-│   │   │
-│   │   └── cart/
-│   │       ├── CartItem.tsx
-│   │       └── CartSummary.tsx
+│   │   └── ui/
+│   │       ├── Button.tsx
+│   │       ├── Counter.tsx
+│   │       ├── index.ts
+│   │       ├── Input.tsx
+│   │       └── Radio.tsx
 │   │
-│   ├── lib/
-│   │   ├── utils.ts
-│   │   ├── convexClient.ts
-│   │   ├── formatCurrency.ts
-│   │   ├── email.ts
-│   │   ├── validation.ts
-│   │   └── constants.ts
+│   ├── contexts/
+│   │   └── CartContext.tsx
+│   │
+│   ├── data/
+│   │   └── products.ts
+│   │
+│   ├── earphones/
+│   │   └── page.tsx
+│   │
+│   ├── headphones/
+│   │   └── page.tsx
 │   │
 │   ├── hooks/
 │   │   ├── useCart.ts
-│   │   ├── useModal.ts
-│   │   └── useFormValidation.ts
+│   │   ├── useFormValidation.ts
+│   │   └── useModal.ts
 │   │
-│   ├── types/
-│   │   ├── product.ts
-│   │   ├── order.ts
-│   │   └── user.ts
+│   ├── lib/
+│   │   ├── constants.ts
+│   │   ├── convexClient.ts
+│   │   ├── email.ts
+│   │   ├── formatCurrency.ts
+│   │   ├── utils.ts
+│   │   └── validation.ts
 │   │
-│   └── data/
-│       └── products.ts
+│   ├── products/
+│   │   ├── page.tsx
+│   │   └── [slug]/
+│   │       └── page.tsx
+│   │
+│   ├── speakers/
+│   │   └── page.tsx
+│   │
+│   ├── style-guide/
+│   │   └── page.tsx
+│   │
+│   └── types/
+│       ├── order.ts
+│       ├── product.ts
+│       └── user.ts
 │
 ├── convex/
+│   ├── _generated/
+│   │   ├── api.d.ts
+│   │   ├── api.js
+│   │   ├── dataModel.d.ts
+│   │   ├── server.d.ts
+│   │   └── server.js
+│   ├── queries.ts
 │   ├── schema.ts
-│   ├── functions/
-│   │   ├── orders.ts
-│   │   ├── products.ts
-│   │   └── users.ts
-│   ├── convex.json
-│   ├── tsconfig.json
-│   └── _generated/
+│   ├── seed.ts
+│   └── mutations.ts
 │
 ├── public/
-│   ├── images/
-│   │   ├── products/
-│   │   └── shared/
-│   ├── icons/
-│   │   └── logo.svg
+│   ├── assets/
 │   ├── email-logo.png
-│   └── favicon.ico
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
 │
 └── .env.local
 ```
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 with App Router
+- **Framework**: Next.js 16 with App Router
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS 4
 - **Database**: Convex
-- **State Management**: React Hooks
+- **State Management**: React Hooks and Context
 - **Form Validation**: Custom hooks
-- **Email**: Custom email service
+- **Email**: Nodemailer with custom service
+- **Animations**: Framer Motion
 - **Icons**: SVG icons
 
 ## Features
 
-- Product catalog with detailed product pages
-- Shopping cart functionality
-- Checkout process with form validation
-- Order confirmation
-- Responsive design
-- Type-safe development
+- Product catalog with category pages (headphones, speakers, earphones)
+- Detailed product pages with image galleries
+- Shopping cart with modal and dedicated cart page
+- Checkout process with comprehensive form validation
+- Order confirmation with email notifications
+- Responsive design across desktop, tablet, and mobile
+- Type-safe development with TypeScript
 - Real-time database with Convex
+- Custom email service for order confirmations
+- Smooth animations with Framer Motion
+- Context-based state management for cart
 
 ## Getting Started
 
