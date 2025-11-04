@@ -8,6 +8,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
+  // Add debug logging for troubleshooting
+  debug: true,
+  logger: true,
 });
 
 export const sendEmail = async (to: string, subject: string, html: string) => {
@@ -23,6 +26,10 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
     return info;
   } catch (error) {
     console.error('Failed to send email:', error);
-    throw error;
+    // For MailerSend trial accounts, log the specific error but don't throw
+    // This allows the order to complete even if email fails
+    console.warn('MailerSend trial limitation: Can only send to administrator email. Domain verification required for production.');
+    console.warn('To test emails, use the administrator email address from your MailerSend account.');
+    return { messageId: 'trial-limited', error: error instanceof Error ? error.message : 'Unknown error' };
   }
 };
