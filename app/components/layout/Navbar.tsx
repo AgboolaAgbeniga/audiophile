@@ -14,10 +14,16 @@ const Navbar = () => {
     <nav className='bg-[#141414] flex items-center justify-center h-20 px-6 w-full'>
       <div className='flex max-w-[1109px] w-full justify-between items-center border-b border-border/20 h-full'>
         <div className='flex items-center gap-4'>
-          <button className='lg:hidden' onClick={() => setIsMenuOpen(true)}>
-            <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 0h24v4H0zM0 8h24v4H0zM0 16h24v4H0z" fill="white"/>
-            </svg>
+          <button className='lg:hidden' onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2L2 14M2 2l12 12" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            ) : (
+              <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v4H0zM0 8h24v4H0zM0 16h24v4H0z" fill="white"/>
+              </svg>
+            )}
           </button>
           <Link href="/">
             <svg width={143} height={25} viewBox="0 0 143 25" fill="none" xmlns="http://www.w3.org/2000/svg" id='logo' className="cursor-pointer">
