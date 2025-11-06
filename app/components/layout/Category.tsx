@@ -27,7 +27,7 @@ const Category = ({ isMenu = false }: CategoryProps) => {
             </Link>
             <Link href="/earphones">
                 <MenuCard
-                    imageSrc="/assets/home/desktop/Earphones.png"
+                    imageSrc="/assets/home/desktop/earphones.png"
                     name="Earphones"
                     className=""
                 />
