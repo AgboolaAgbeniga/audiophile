@@ -48,9 +48,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         await props.onClick?.(e);
         if (successText) {
           setIsSuccess(true);
+          // Ensure loading state doesn't override success UI
+          setIsLoading(false);
           setTimeout(() => {
             setIsSuccess(false);
-            setIsLoading(false);
           }, 1500);
         } else {
           setIsLoading(false);
@@ -61,8 +62,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     const getButtonText = () => {
-      if (isLoading) return loadingText || 'Loading...';
       if (isSuccess) return successText || 'Success!';
+      if (isLoading) return loadingText || 'Loading...';
       return children;
     };
 

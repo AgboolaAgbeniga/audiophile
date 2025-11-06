@@ -18,7 +18,7 @@ export default function MenuCard({
   return (
     <div
       className={`group relative flex flex-col items-center cursor-pointer justify-between pb-8
-        w-[327px] h-[284px] md:w-[223px] lg:w-[350px] border
+        w-[327px] h-[284px] md:w-[223px] lg:w-[350px]
         ${className || ""}
       `}
     >
