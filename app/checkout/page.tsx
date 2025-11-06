@@ -22,7 +22,7 @@ const Checkout = () => {
     <div className="flex flex-col min-h-screen bg-[#F1F1F1]">
       <div className="flex-1 h-full">
         {/* Go Back Link */}
-        <div className="container mx-auto py-8 max-w-[1110px]">
+        <div className="container mx-auto py-8 px-6 md:px-0 max-w-[1110px]">
           <button
             onClick={() => router.back()}
             className="text-black/50 hover:text-primary transition-colors duration-200"

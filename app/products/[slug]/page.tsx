@@ -37,7 +37,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Go Back Link */}
-      <div className="container mx-auto px- py-8 max-w-[1110px]">
+      <div className="container mx-auto px-6 md:px-0 py-8 max-w-[1110px]">
         <Link
           href={`/${product.category}`}
           className="text-black/50 hover:text-primary transition-colors duration-200"

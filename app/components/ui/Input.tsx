@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
 const inputVariants = cva(
-  'w-[309px] h-[56px] px-4 py-3 font-medium text-[14px] rounded-md focus:outline-none transition-colors duration-200',
+  'w-full h-[56px] px-4 py-3 font-medium text-[14px] rounded-md focus:outline-none transition-colors duration-200',
   {
     variants: {
       state: {
@@ -14,8 +14,8 @@ const inputVariants = cva(
         error: 'border border-[#CD2C2C] bg-white text-black placeholder:text-black/40',
       },
       size: {
-        default: 'w-[309px] h-[56px]',
-        address: 'w-[634px] h-[56px]',
+        default: 'md:w-[309px]',
+        address: 'md:w-[634px]',
       },
     },
     defaultVariants: {
