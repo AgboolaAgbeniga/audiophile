@@ -28,7 +28,7 @@ const Header = () => {
         <div className="relative flex flex-col justify-center lg:flex-row lg:justify-between lg:items-center max-w-[1109px] w-full h-[729px]'">
           {/* Product Details */}
           <div className="text-white text-center w-full lg:w-[398px] lg:text-left z-10 relative">
-            <span className="inline-block text-white/49 text-sm font-normal uppercase tracking-[10px] px-3 py-1 rounded mb-6">
+            <span className="inline-block text-[#D87D4A] text-sm font-bold uppercase tracking-[10px]  rounded mb-6">
               New Product
             </span>
 

@@ -43,7 +43,7 @@ const SpeakersPage = () => {
               <div className={`flex flex-col justify-center px-8 md:px-16 ${isEven ? '' : 'md:col-start-1 md:row-start-1'}`}>
                 <div className="text-black text-center md:text-left">
                   {index === 0 && (
-                    <span className="inline-block text-white/49 text-sm font-normal uppercase tracking-[10px] px-3 py-1 rounded mb-6 bg-[#979797]">
+                    <span className="inline-block text-[#D87D4A] text-sm font-bold uppercase tracking-[10px] rounded mb-6">
                       New Product
                     </span>
                   )}
